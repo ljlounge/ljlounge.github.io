@@ -12,7 +12,20 @@
       --radius:16px;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    body{
+      margin:0;
+      color:var(--txt);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+
+      /* Background image + dark overlay for readability */
+      background:
+        linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.78)),
+        url("images/background.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
     a{color:inherit}
     .wrap{max-width:980px;margin:0 auto;padding:14px}
 
@@ -34,19 +47,31 @@
     .controls{display:flex;gap:10px;padding:0 14px 14px}
     .search{
       flex:1; display:flex; align-items:center; gap:10px;
-      background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 12px;
+      background:rgba(20,20,20,.88);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 12px;
+      backdrop-filter: blur(4px);
     }
     .search input{
-      width:100%; background:transparent; border:0; outline:0; color:var(--txt); font-size:14px;
+      width:100%; background:transparent; border:0; outline:0;
+      color:var(--txt); font-size:14px;
     }
 
     .tabs{display:flex;gap:8px;overflow:auto;padding:0 14px 14px}
     .tab{
-      border:1px solid var(--line); background:var(--chip); color:var(--muted);
+      border:1px solid var(--line);
+      background:rgba(28,28,28,.88);
+      color:var(--muted);
       padding:9px 12px;border-radius:999px;font-size:13px;cursor:pointer;white-space:nowrap;
       user-select:none;
+      backdrop-filter: blur(4px);
     }
-    .tab.active{border-color:rgba(201,162,77,.6); color:var(--txt); box-shadow:0 0 0 1px rgba(201,162,77,.15) inset}
+    .tab.active{
+      border-color:rgba(201,162,77,.6);
+      color:var(--txt);
+      box-shadow:0 0 0 1px rgba(201,162,77,.15) inset
+    }
 
     main{padding:14px}
     .section-title{margin:10px 0 10px;color:var(--accent);font-size:13px;letter-spacing:.6px;text-transform:uppercase}
@@ -57,13 +82,14 @@
       gap:12px;
     }
     .card{
-      background:var(--card);
+      background: rgba(20,20,20,0.88);
       border:1px solid var(--line);
       border-radius:var(--radius);
       overflow:hidden;
       display:flex;
       flex-direction:column;
-      min-height: 250px;
+      min-height: 240px;
+      backdrop-filter: blur(4px);
     }
     .img{
       width:100%;
@@ -74,11 +100,9 @@
     }
     .pad{padding:12px}
     .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .name{font-weight:700;font-size:14px}
-    .price{color:var(--accent);font-weight:800;white-space:nowrap}
+    .name{font-weight:800;font-size:14px}
+    .price{color:var(--accent);font-weight:900;white-space:nowrap}
     .desc{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
-    .meta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
-    .pill{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 8px}
 
     .actions{margin-top:auto;padding:12px;border-top:1px solid var(--line);display:flex;gap:10px}
     .btn{
@@ -88,11 +112,11 @@
       color:var(--txt);
       padding:10px 12px;
       border-radius:12px;
-      font-weight:700;
+      font-weight:800;
       font-size:13px;
       cursor:pointer;
     }
-    .btn.secondary{background:transparent;color:var(--muted)}
+    .btn.secondary{background:transparent;color:var(--muted);cursor:default}
     .btn:hover{border-color:rgba(201,162,77,.55)}
 
     footer{padding:18px 14px 26px;color:var(--muted);font-size:12px}
@@ -124,7 +148,7 @@
       padding:8px 10px;
       border-radius:12px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
     }
     .list{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
     .li{
@@ -200,26 +224,32 @@
 </div>
 
 <script>
-  /*
-    BILDER: Lege im Repo einen Ordner "images" an und lade diese Dateien hoch:
-    images/soft.jpg
-    images/hot.jpg
-    images/cocktail.jpg
-    images/longdrink.jpg
-    images/shots.jpg
-    images/shisha.jpg
-    (Du kannst später pro Drink eigene Bilder setzen.)
-  */
-
+  // SHISHA SORTEN
   const shishaTraditionell = [
-    "Traube Minze","Zitrone Minze","Doppelapfel","Falim","Falim Red","Black Nana"
+    "Traube Minze",
+    "Zitrone Minze",
+    "Doppelapfel",
+    "Falim",
+    "Falim Red",
+    "Black Nana"
   ];
 
   const shishaFruchtig = [
-    "Kiwi","African Queen","Ice Kaktus","Love66","Blaubeere","Wildberry Chill","Lemon Chill",
-    "Drachenfrucht","Pistazie","Peach","Ice Bonbon","GUM"
+    "Kiwi",
+    "African Queen",
+    "Ice Kaktus",
+    "Love 66",
+    "Blaubeere",
+    "Wildberry Chill",
+    "Lemon Chill",
+    "Drachenfrucht",
+    "Pistazie",
+    "Peach",
+    "Ice Bonbon",
+    "GUM"
   ];
 
+  // MENU ITEMS
   const items = [
     /* SHISHA */
     {cat:"shisha", name:"Shisha – Traditionell", price:"12,00 €", desc:"Sorten anzeigen", img:"images/shisha.jpg",
@@ -228,7 +258,7 @@
       action:{type:"modal", title:"Shisha – Fruchtig (14,00 €)", sub:"Sorten", list: shishaFruchtig}},
     {cat:"shisha", name:"Kopfwechsel", price:"9,00 €", desc:"Neuer Kopf", img:"images/shisha.jpg"},
 
-    /* COCKTAILS */
+    /* COCKTAILS (alkoholisch) */
     {cat:"cocktail", name:"Sex on the Beach", price:"9,50 €", img:"images/cocktail.jpg"},
     {cat:"cocktail", name:"Mai Tai", price:"9,50 €", img:"images/cocktail.jpg"},
     {cat:"cocktail", name:"Mojito", price:"7,50 €", img:"images/cocktail.jpg"},
@@ -256,14 +286,13 @@
     {cat:"soft", name:"Moloko Blaubeere", price:"5,00 €", img:"images/soft.jpg"},
     {cat:"soft", name:"Säfte (versch. Sorten)", price:"4,50 €", img:"images/soft.jpg"},
 
-    /* HOT */
+    /* HEISS GETRÄNKE */
     {cat:"hot", name:"Tee (versch. Sorten)", price:"3,00 €", img:"images/hot.jpg"},
     {cat:"hot", name:"Cappuccino", price:"4,50 €", img:"images/hot.jpg"},
     {cat:"hot", name:"Espresso", price:"3,50 €", img:"images/hot.jpg"},
-    // Du hattest "Cai Tee 1,00€" geschrieben. Wenn das stimmt, lass es so. Sonst Preis hier ändern.
     {cat:"hot", name:"Chai Tee", price:"1,00 €", img:"images/hot.jpg"},
 
-    /* SHOTS */
+    /* SHOTS (4 cl) */
     {cat:"shots", name:"Tequila (4 cl)", price:"2,90 €", img:"images/shots.jpg"},
     {cat:"shots", name:"Ficken (4 cl)", price:"2,90 €", img:"images/shots.jpg"},
     {cat:"shots", name:"Jägermeister (4 cl)", price:"2,90 €", img:"images/shots.jpg"},

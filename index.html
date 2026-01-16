@@ -1,90 +1,198 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LJ Lounge – Getränkekarte</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LJ Lounge – Menu</title>
+  <meta name="theme-color" content="#0b0b0b" />
+  <style>
+    :root{
+      --bg:#0b0b0b; --card:#141414; --line:#262626; --txt:#ffffff;
+      --muted:#b6b6b6; --accent:#c9a24d; --chip:#1c1c1c;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    a{color:inherit}
 
-<style>
-body{margin:0;background:#0f0f0f;color:#fff;font-family:system-ui,-apple-system,Arial}
-.wrap{max-width:900px;margin:auto;padding:16px}
-header{margin-bottom:20px}
-h1{margin:0;font-size:26px}
-.sub{color:#c9a24d;margin-top:6px}
+    .wrap{max-width:980px;margin:0 auto;padding:14px}
+    header{
+      position:sticky; top:0; z-index:10;
+      background:linear-gradient(180deg, rgba(11,11,11,.98), rgba(11,11,11,.92));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px}
+    .brand{display:flex;flex-direction:column}
+    .brand h1{margin:0;font-size:18px;letter-spacing:.4px}
+    .brand .sub{margin-top:2px;color:var(--muted);font-size:12px}
+    .badge{
+      padding:8px 10px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(20,20,20,.7);color:var(--accent);font-size:12px;white-space:nowrap;
+    }
 
-h2{margin:28px 0 10px;color:#c9a24d;font-size:18px}
+    .controls{display:flex;gap:10px;padding:0 14px 14px}
+    .search{
+      flex:1; display:flex; align-items:center; gap:10px;
+      background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 12px;
+    }
+    .search input{
+      width:100%; background:transparent; border:0; outline:0; color:var(--txt); font-size:14px;
+    }
+    .tabs{display:flex;gap:8px;overflow:auto;padding:0 14px 14px}
+    .tab{
+      border:1px solid var(--line); background:var(--chip); color:var(--muted);
+      padding:9px 12px;border-radius:999px;font-size:13px;cursor:pointer;white-space:nowrap;
+      user-select:none;
+    }
+    .tab.active{border-color:rgba(201,162,77,.6); color:var(--txt); box-shadow:0 0 0 1px rgba(201,162,77,.15) inset}
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:14px;
-}
+    main{padding:14px}
+    .section-title{margin:18px 0 10px;color:var(--accent);font-size:14px;letter-spacing:.6px;text-transform:uppercase}
+    .grid{
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px;
+    }
+    .card{
+      background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .img{
+      width:100%; height:130px; background:#0f0f0f;
+      display:block; object-fit:cover;
+    }
+    .pad{padding:12px}
+    .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .name{font-weight:650;font-size:14px}
+    .price{color:var(--accent);font-weight:650;white-space:nowrap}
+    .desc{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
+    .meta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .pill{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 8px}
 
-.card{
-  background:#161616;
-  border-radius:10px;
-  overflow:hidden;
-  border:1px solid #262626;
-}
+    footer{padding:18px 14px 26px;color:var(--muted);font-size:12px}
+    .hint{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}
 
-.card img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-}
-
-.card .info{
-  padding:10px;
-  display:flex;
-  justify-content:space-between;
-  font-size:14px;
-}
-
-.price{color:#c9a24d}
-
-.note{font-size:12px;color:#aaa;margin-top:24px}
-</style>
+    @media (max-width:420px){
+      .grid{grid-template-columns:1fr}
+      .badge{display:none}
+    }
+  </style>
 </head>
 
 <body>
-<div class="wrap">
 
 <header>
-  <h1>LJ Lounge</h1>
-  <div class="sub">Getränke- & Shishakarte</div>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <h1>LJ Lounge</h1>
+        <div class="sub">Getränke- & Shishakarte</div>
+      </div>
+      <div class="badge">Scan & bestellen</div>
+    </div>
+
+    <div class="controls">
+      <div class="search">
+        <span aria-hidden="true">🔎</span>
+        <input id="q" type="search" placeholder="Suchen… (z.B. Cola, Red Bull, Mojito)" />
+      </div>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <div class="tab active" data-cat="all">Alles</div>
+      <div class="tab" data-cat="soft">Softdrinks</div>
+      <div class="tab" data-cat="hot">Heissgetränke</div>
+      <div class="tab" data-cat="energy">Energy</div>
+      <div class="tab" data-cat="shisha">Shisha</div>
+      <div class="tab" data-cat="cocktail">Cocktails</div>
+    </div>
+  </div>
 </header>
 
-<h2>Softdrinks</h2>
-<div class="grid">
-  <div class="card">
-    <img src="images/cola.jpg" alt="Coca-Cola">
-    <div class="info"><span>Coca-Cola</span><span class="price">3.50 €</span></div>
+<main class="wrap">
+  <div class="section-title" id="sectionTitle">Empfehlungen</div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer class="wrap">
+  <div class="hint">
+    Alle Preise inkl. MwSt. • Änderungen vorbehalten • Öffnungszeiten: 17:00–01:00
   </div>
+</footer>
 
-  <div class="card">
-    <img src="images/water.jpg" alt="Mineralwasser">
-    <div class="info"><span>Mineralwasser</span><span class="price">3.00 €</span></div>
-  </div>
-</div>
+<script>
+  // Bilder: Lege sie im Repo unter /images/ ab (z.B. images/cola.jpg)
+  const items = [
+    {cat:"soft",   name:"Coca-Cola",      price:"3.50 €", desc:"0.33l", img:"images/cola.jpg", tags:["kalt","0.33l"]},
+    {cat:"soft",   name:"Mineralwasser",  price:"3.00 €", desc:"0.5l",  img:"images/water.jpg", tags:["still/sprudel","0.5l"]},
+    {cat:"energy", name:"Red Bull",       price:"4.50 €", desc:"0.25l", img:"images/redbull.jpg", tags:["energy","0.25l"]},
+    {cat:"hot",    name:"Kaffee",         price:"3.00 €", desc:"frisch",img:"images/coffee.jpg", tags:["heiss"]},
+    {cat:"shisha", name:"Shisha Classic", price:"15.00 €",desc:"1 Kopf",img:"images/shisha.jpg", tags:["classic"]},
+    {cat:"shisha", name:"Shisha Premium", price:"18.00 €",desc:"Premium Tabak",img:"images/shisha_premium.jpg", tags:["premium"]},
+    {cat:"cocktail",name:"Mojito",        price:"9.50 €", desc:"Minze • Limette",img:"images/mojito.jpg", tags:["cocktail"]},
+  ];
 
-<h2>Heissgetränke</h2>
-<div class="grid">
-  <div class="card">
-    <img src="images/coffee.jpg" alt="Kaffee">
-    <div class="info"><span>Kaffee</span><span class="price">3.00 €</span></div>
-  </div>
-</div>
+  const grid = document.getElementById("grid");
+  const q = document.getElementById("q");
+  const tabs = document.getElementById("tabs");
+  const sectionTitle = document.getElementById("sectionTitle");
 
-<h2>Shisha</h2>
-<div class="grid">
-  <div class="card">
-    <img src="images/shisha.jpg" alt="Shisha">
-    <div class="info"><span>Classic</span><span class="price">15.00 €</span></div>
-  </div>
-</div>
+  let activeCat = "all";
 
-<div class="note">Alle Preise inkl. MwSt.</div>
+  function render(){
+    const query = (q.value || "").trim().toLowerCase();
 
-</div>
+    const filtered = items.filter(x => {
+      const inCat = (activeCat === "all") || (x.cat === activeCat);
+      if(!inCat) return false;
+
+      if(!query) return true;
+      const hay = (x.name + " " + (x.desc||"") + " " + (x.tags||[]).join(" ")).toLowerCase();
+      return hay.includes(query);
+    });
+
+    sectionTitle.textContent =
+      activeCat === "all" ? "Empfehlungen" :
+      [...tabs.querySelectorAll(".tab")].find(t=>t.dataset.cat===activeCat)?.textContent || "Menu";
+
+    grid.innerHTML = filtered.map(x => `
+      <article class="card">
+        <img class="img" src="${x.img}" alt="${escapeHtml(x.name)}" loading="lazy">
+        <div class="pad">
+          <div class="row">
+            <div class="name">${escapeHtml(x.name)}</div>
+            <div class="price">${escapeHtml(x.price)}</div>
+          </div>
+          ${x.desc ? `<div class="desc">${escapeHtml(x.desc)}</div>` : ``}
+          ${x.tags?.length ? `<div class="meta">${x.tags.map(t=>`<span class="pill">${escapeHtml(t)}</span>`).join("")}</div>` : ``}
+        </div>
+      </article>
+    `).join("");
+
+    if(filtered.length === 0){
+      grid.innerHTML = `<div style="color:#b6b6b6;padding:10px">Keine Treffer.</div>`;
+    }
+  }
+
+  function setActive(cat){
+    activeCat = cat;
+    [...tabs.querySelectorAll(".tab")].forEach(t => t.classList.toggle("active", t.dataset.cat === cat));
+    render();
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  tabs.addEventListener("click", (e) => {
+    const t = e.target.closest(".tab");
+    if(!t) return;
+    setActive(t.dataset.cat);
+  });
+
+  q.addEventListener("input", render);
+
+  render();
+</script>
+
 </body>
 </html>

@@ -34,7 +34,6 @@
       border-bottom:1px solid var(--line);
     }
 
-    /* Responsive Header Layout */
     .top{
       display:flex; justify-content:space-between; align-items:center;
       gap:10px; padding:14px; flex-wrap:wrap;
@@ -44,10 +43,6 @@
     .brand{display:flex;flex-direction:column}
     .brand h1{margin:0;font-size:18px;letter-spacing:.4px}
     .brand .sub{margin-top:2px;color:var(--muted);font-size:12px}
-    .badge{
-      padding:8px 10px;border:1px solid var(--line);border-radius:999px;
-      background:rgba(20,20,20,.7);color:var(--accent);font-size:12px;white-space:nowrap;
-    }
     .right-wrap{display:flex;align-items:center;gap:10px;margin-left:auto}
 
     .socials{display:flex;align-items:center;gap:10px}
@@ -61,6 +56,27 @@
     .socials a:hover{border-color:rgba(201,162,77,.8);transform:translateY(-1px)}
     .socials svg{width:18px;height:18px;display:block}
     .socials svg path{fill:currentColor}
+
+    /* Warenkorb Button */
+    .cartBtn{
+      display:inline-flex; align-items:center; gap:8px;
+      height:36px; padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(20,20,20,.7);
+      cursor:pointer;
+      color:var(--txt);
+      transition:all .2s ease;
+    }
+    .cartBtn:hover{border-color:rgba(201,162,77,.8);transform:translateY(-1px)}
+    .cartCount{
+      min-width:20px;height:20px;border-radius:999px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:900;
+      background:rgba(201,162,77,.18);
+      border:1px solid rgba(201,162,77,.35);
+      color:var(--accent);
+    }
 
     .controls{display:flex;gap:10px;padding:0 14px 14px}
     .search{
@@ -113,7 +129,7 @@
     }
     .img{
       width:100%;
-      height:auto;        /* zeigt komplettes Getränk */
+      height:auto; /* komplettes Getränk anzeigen */
       display:block;
     }
     .pad{padding:12px}
@@ -136,7 +152,15 @@
     .btn.secondary{background:transparent;color:var(--muted);cursor:default}
     .btn:hover{border-color:rgba(201,162,77,.55)}
 
-    /* START-KACHELN MIT BILDERN */
+    /* Add/Minus Buttons */
+    .btnRow{display:flex; gap:10px; width:100%}
+    .btn.icon{
+      width:44px; min-width:44px;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:18px; font-weight:900;
+    }
+
+    /* Start-Kacheln */
     .tile{
       position:relative;
       height:140px;
@@ -173,14 +197,8 @@
       flex-direction:column;
       gap:4px;
     }
-    .tileTitle{
-      font-weight:950;
-      letter-spacing:.3px;
-    }
-    .tileSub{
-      color:rgba(255,255,255,.78);
-      font-size:12px;
-    }
+    .tileTitle{font-weight:950;letter-spacing:.3px}
+    .tileSub{color:rgba(255,255,255,.78);font-size:12px}
 
     footer{padding:18px 14px 26px;color:var(--muted);font-size:12px}
     .hint{
@@ -228,10 +246,37 @@
       color:var(--txt);
     }
 
+    /* Warenkorb-Liste */
+    .cartLine{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+      border:1px solid var(--line);
+      background:#141414;
+      border-radius:12px;
+      padding:10px;
+    }
+    .cartLeft{display:flex; flex-direction:column; gap:4px}
+    .cartName{font-weight:800}
+    .cartMeta{color:var(--muted); font-size:12px}
+    .cartRight{display:flex; flex-direction:column; align-items:flex-end; gap:6px}
+    .qtyRow{display:flex; gap:8px; align-items:center}
+    .qtyBtn{
+      width:34px;height:34px;border-radius:10px;
+      border:1px solid var(--line); background:#171717;
+      color:var(--txt); cursor:pointer; font-weight:900;
+    }
+    .totalRow{
+      display:flex; justify-content:space-between; gap:10px;
+      margin-top:12px; padding-top:12px; border-top:1px solid var(--line);
+      font-weight:900;
+    }
+    .cartActions{
+      display:flex; gap:10px; margin-top:12px;
+    }
+    .cartActions .btn{flex:1}
+
     @media (max-width:520px){
       .logo{height:34px}
       .brand h1{font-size:16px}
-      .badge{display:none}
       .right-wrap{margin-left:0}
       .tile{height:130px}
     }
@@ -247,7 +292,7 @@
   <div class="wrap">
     <div class="top">
       <div class="logo-wrap">
-        <img src="images/logo.jpg" alt="LJ Lounge Logo" class="logo">
+        <img src="images/logo.png" alt="LJ Lounge Logo" class="logo">
         <div class="brand">
           <h1>LJ Lounge</h1>
           <div class="sub">Getränke- & Shishakarte</div>
@@ -263,6 +308,10 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.1c-1.5 0-3-.5-4.2-1.4v8.4a6.6 6.6 0 1 1-6.6-6.6c.4 0 .8 0 1.2.1v3.6a2.9 2.9 0 1 0 2 2.7V2h3.4c.3 1.9 2 3.5 4.1 3.7v2.4z"/></svg>
           </a>
         </div>
+
+        <button class="cartBtn" id="cartBtn" type="button" aria-label="Warenkorb öffnen">
+          🛒 <span class="cartCount" id="cartCount">0</span>
+        </button>
       </div>
     </div>
 
@@ -306,6 +355,7 @@
   </div>
 </footer>
 
+<!-- Shisha Modal -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Shisha Sorten">
   <div class="sheet">
     <div class="sheetTop">
@@ -313,9 +363,41 @@
         <h3 id="modalTitle">Shisha Sorten</h3>
         <p id="modalSub"></p>
       </div>
-      <button class="close" id="modalClose">Schliessen</button>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="close" id="modalAddToCart" type="button">In den Warenkorb</button>
+        <button class="close" id="modalClose" type="button">Schliessen</button>
+      </div>
     </div>
     <div class="list" id="modalList"></div>
+  </div>
+</div>
+
+<!-- Warenkorb Modal -->
+<div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Warenkorb">
+  <div class="sheet">
+    <div class="sheetTop">
+      <div>
+        <h3>Warenkorb</h3>
+        <p>Ausgewählte Artikel</p>
+      </div>
+      <button class="close" id="cartClose" type="button">Schliessen</button>
+    </div>
+
+    <div class="list" id="cartList" style="grid-template-columns:1fr; gap:10px;"></div>
+
+    <div class="totalRow">
+      <div>Summe</div>
+      <div id="cartTotal">0,00 €</div>
+    </div>
+
+    <div class="cartActions">
+      <button class="btn" id="cartCopy" type="button">Bestellung kopieren</button>
+      <button class="btn" id="cartClear" type="button" style="border-color:rgba(201,162,77,.35)">Leeren</button>
+    </div>
+
+    <p style="margin-top:10px;color:var(--muted);font-size:12px;line-height:1.4">
+      Hinweis: Der Warenkorb dient nur zur Auswahl/Anzeige und ist keine Online-Bestellung.
+    </p>
   </div>
 </div>
 
@@ -380,8 +462,6 @@
     {cat:"snacks", name:"Nachos Chili Cheese", price:"6,00 €", img:"images/snacks_nachos.jpg"}
   ];
 
-  // START-KACHELN: Bilder statt Anzahl
-  // Passe hier die Bildpfade an (liegen in /images/)
   const categoriesHome = [
     {cat:"shisha",    title:"Shisha",     sub:"Traditionell & fruchtig", img:"images/lj_tile_shisha.jpg"},
     {cat:"cocktail",  title:"Cocktails",  sub:"Alkoholisch & alkoholfrei", img:"images/lj_tile_cocktails.jpg"},
@@ -398,11 +478,25 @@
   const cocktailFilter = document.getElementById("cocktailFilter");
   const controls = document.getElementById("controls");
 
+  /* Shisha Modal Elemente */
   const modal = document.getElementById("modal");
   const modalTitle = document.getElementById("modalTitle");
   const modalSub = document.getElementById("modalSub");
   const modalList = document.getElementById("modalList");
-  const modalClose = document.getElementById("modalClose");
+  const modalAddToCart = document.getElementById("modalAddToCart");
+  const modalClose = document.getElementById("modalClose"); // ✅ FIX: war bei dir nicht definiert
+
+  let modalItemRef = null; // ✅ FIX: Referenz auf aktuelles Shisha-Item
+
+  /* Warenkorb Elemente */
+  const cartBtn = document.getElementById("cartBtn");
+  const cartCountEl = document.getElementById("cartCount");
+  const cartModal = document.getElementById("cartModal");
+  const cartClose = document.getElementById("cartClose");
+  const cartList = document.getElementById("cartList");
+  const cartTotalEl = document.getElementById("cartTotal");
+  const cartCopy = document.getElementById("cartCopy");
+  const cartClear = document.getElementById("cartClear");
 
   let activeCat = "home";
   let activeAlc = "all";
@@ -413,17 +507,34 @@
     }[m]));
   }
 
-  function openModal(title, sub, list){
+  /* ===========================
+     Shisha Modal – FIXED
+  ============================ */
+  function openModal(title, sub, list, itemRef){
     modalTitle.textContent = title || "Details";
     modalSub.textContent = sub || "";
     modalList.innerHTML = (list || []).map(x => `<div class="li">${escapeHtml(x)}</div>`).join("");
+    modalItemRef = itemRef || null;
+    modalAddToCart.style.display = modalItemRef ? "inline-flex" : "none";
     modal.classList.add("open");
   }
-  function closeModal(){ modal.classList.remove("open"); }
+  function closeModal(){
+    modal.classList.remove("open");
+    modalItemRef = null;
+  }
   modalClose.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
-  document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
 
+  modalAddToCart.addEventListener("click", () => {
+    if(!modalItemRef) return;
+    addToCart(modalItemRef);
+    modalAddToCart.textContent = "Hinzugefügt";
+    setTimeout(()=> modalAddToCart.textContent = "In den Warenkorb", 900);
+  });
+
+  /* ===========================
+     Cocktail-Filter UI
+  ============================ */
   function resetCocktailFilterUI(){
     activeAlc = "all";
     [...cocktailFilter.querySelectorAll(".tab")].forEach(t =>
@@ -431,6 +542,126 @@
     );
   }
 
+  /* ===========================
+     Warenkorb Logik
+  ============================ */
+  const CART_KEY = "lj_cart_v1";
+  let cart = loadCart(); // { "<name>": {qty, priceText, cat} }
+
+  function loadCart(){
+    try{
+      const raw = localStorage.getItem(CART_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch{ return {}; }
+  }
+  function saveCart(){
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartBadge();
+  }
+  function parseEuro(s){
+    const n = String(s || "").replace("€","").trim().replace(".","").replace(",",".");
+    const v = Number(n);
+    return Number.isFinite(v) ? v : 0;
+  }
+  function formatEuro(v){
+    return v.toFixed(2).replace(".", ",") + " €";
+  }
+  function updateCartBadge(){
+    const count = Object.values(cart).reduce((a,x)=>a + (x.qty||0), 0);
+    cartCountEl.textContent = String(count);
+  }
+  function addToCart(item){
+    const key = item.name;
+    cart[key] = cart[key] || { qty:0, priceText:item.price, cat:item.cat };
+    cart[key].qty += 1;
+    saveCart();
+  }
+  function removeFromCart(item){
+    const key = item.name;
+    if(!cart[key]) return;
+    cart[key].qty -= 1;
+    if(cart[key].qty <= 0) delete cart[key];
+    saveCart();
+  }
+  function openCart(){
+    renderCart();
+    cartModal.classList.add("open");
+  }
+  function closeCart(){
+    cartModal.classList.remove("open");
+  }
+  function renderCart(){
+    const entries = Object.entries(cart);
+    if(entries.length === 0){
+      cartList.innerHTML = `<div style="color:#b6b6b6;padding:8px">Warenkorb ist leer.</div>`;
+      cartTotalEl.textContent = "0,00 €";
+      return;
+    }
+
+    let total = 0;
+    cartList.innerHTML = entries.map(([name, it]) => {
+      const price = parseEuro(it.priceText);
+      total += price * it.qty;
+      return `
+        <div class="cartLine">
+          <div class="cartLeft">
+            <div class="cartName">${escapeHtml(name)}</div>
+            <div class="cartMeta">${escapeHtml(it.priceText)} • ${escapeHtml(it.cat)}</div>
+          </div>
+          <div class="cartRight">
+            <div class="qtyRow">
+              <button class="qtyBtn" data-cart="minus" data-name="${escapeHtml(name)}">−</button>
+              <div style="min-width:22px;text-align:center;font-weight:900">${it.qty}</div>
+              <button class="qtyBtn" data-cart="plus" data-name="${escapeHtml(name)}">+</button>
+            </div>
+            <div style="color:var(--accent);font-weight:900">${formatEuro(price * it.qty)}</div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    cartTotalEl.textContent = formatEuro(total);
+  }
+
+  cartBtn.addEventListener("click", openCart);
+  cartClose.addEventListener("click", closeCart);
+  cartModal.addEventListener("click", (e) => { if(e.target === cartModal) closeCart(); });
+
+  cartList.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-cart]");
+    if(!btn) return;
+    const name = btn.dataset.name;
+    const item = items.find(x => x.name === name);
+    if(!item) return;
+    if(btn.dataset.cart === "plus") addToCart(item);
+    if(btn.dataset.cart === "minus") removeFromCart(item);
+    renderCart();
+  });
+
+  cartClear.addEventListener("click", () => {
+    cart = {};
+    saveCart();
+    renderCart();
+  });
+
+  cartCopy.addEventListener("click", async () => {
+    const lines = Object.entries(cart).map(([n, it]) => `${it.qty}x ${n} (${it.priceText})`);
+    const total = cartTotalEl.textContent;
+    const text = `Bestellung LJ Lounge:\n${lines.join("\n")}\n\nSumme: ${total}`;
+    try{
+      await navigator.clipboard.writeText(text);
+      cartCopy.textContent = "Kopiert";
+      setTimeout(()=> cartCopy.textContent="Bestellung kopieren", 1200);
+    }catch{
+      alert("Kopieren nicht möglich. Bitte manuell markieren.");
+    }
+  });
+
+  updateCartBadge();
+
+  /* ===========================
+     Render
+  ============================ */
   function renderHome(){
     sectionTitle.textContent = "Start";
     grid.innerHTML = categoriesHome.map(c => `
@@ -466,6 +697,7 @@
 
     grid.innerHTML = filtered.map((x) => {
       const hasAction = x.action && x.action.type === "modal";
+
       return `
         <article class="card" data-name="${escapeHtml(x.name)}">
           <img class="img" src="${escapeHtml(x.img)}" alt="${escapeHtml(x.name)}" loading="lazy">
@@ -476,10 +708,17 @@
             </div>
             ${x.desc ? `<div class="desc">${escapeHtml(x.desc)}</div>` : ``}
           </div>
+
           <div class="actions">
-            ${hasAction
-              ? `<button class="btn" data-action="open">Sorten anzeigen</button>`
-              : `<button class="btn secondary" disabled>—</button>`
+            ${
+              hasAction
+                ? `<button class="btn" data-action="open" type="button">Sorten anzeigen</button>`
+                : `
+                  <div class="btnRow">
+                    <button class="btn" data-cartadd="1" type="button">+ Hinzufügen</button>
+                    <button class="btn icon" data-cartremove="1" aria-label="Entfernen" type="button">−</button>
+                  </div>
+                `
             }
           </div>
         </article>
@@ -532,15 +771,34 @@
     if(tile){ setActive(tile.dataset.goto); return; }
 
     const btn = e.target.closest("button[data-action='open']");
-    if(!btn) return;
-
-    const card = e.target.closest(".card");
-    const name = card?.dataset?.name;
-    const x = items.find(it => it.name === name);
-
-    if(x?.action?.type === "modal"){
-      openModal(x.action.title, x.action.sub, x.action.list);
+    if(btn){
+      const card = e.target.closest(".card");
+      const name = card?.dataset?.name;
+      const x = items.find(it => it.name === name);
+      if(x?.action?.type === "modal"){
+        openModal(x.action.title, x.action.sub, x.action.list, x);
+      }
+      return;
     }
+
+    const add = e.target.closest("button[data-cartadd]");
+    const rem = e.target.closest("button[data-cartremove]");
+    if(add || rem){
+      const card = e.target.closest(".card");
+      const name = card?.dataset?.name;
+      const item = items.find(it => it.name === name);
+      if(!item) return;
+      if(add) addToCart(item);
+      if(rem) removeFromCart(item);
+      return;
+    }
+  });
+
+  /* ESC schliesst beide Modals */
+  document.addEventListener("keydown", (e) => {
+    if(e.key !== "Escape") return;
+    closeModal();
+    closeCart();
   });
 
   q.addEventListener("input", render);

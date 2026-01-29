@@ -36,67 +36,31 @@
 
     /* Responsive Header Layout */
     .top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding:14px;
-      flex-wrap:wrap;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px; padding:14px; flex-wrap:wrap;
     }
-
-    .logo-wrap{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:220px;
-    }
-    .logo{
-      height:42px;
-      width:auto;
-      flex:0 0 auto;
-    }
-
+    .logo-wrap{display:flex;align-items:center;gap:10px;min-width:220px}
+    .logo{height:42px;width:auto;flex:0 0 auto}
     .brand{display:flex;flex-direction:column}
     .brand h1{margin:0;font-size:18px;letter-spacing:.4px}
     .brand .sub{margin-top:2px;color:var(--muted);font-size:12px}
-
     .badge{
       padding:8px 10px;border:1px solid var(--line);border-radius:999px;
       background:rgba(20,20,20,.7);color:var(--accent);font-size:12px;white-space:nowrap;
     }
+    .right-wrap{display:flex;align-items:center;gap:10px;margin-left:auto}
 
-    .right-wrap{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-left:auto;
-    }
-
-    .socials{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+    .socials{display:flex;align-items:center;gap:10px}
     .socials a{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:36px;
-      height:36px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(20,20,20,.7);
+      display:inline-flex;align-items:center;justify-content:center;
+      width:36px;height:36px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(20,20,20,.7);
       transition:all .2s ease;
+      color:var(--txt);
     }
-    .socials a:hover{
-      border-color:rgba(201,162,77,.8);
-      transform:translateY(-1px);
-    }
-    .socials svg{
-      width:18px;
-      height:18px;
-      fill:var(--txt);
-    }
+    .socials a:hover{border-color:rgba(201,162,77,.8);transform:translateY(-1px)}
+    .socials svg{width:18px;height:18px;display:block}
+    .socials svg path{fill:currentColor}
 
     .controls{display:flex;gap:10px;padding:0 14px 14px}
     .search{
@@ -135,6 +99,8 @@
       grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
       gap:12px;
     }
+
+    /* Produktkarten */
     .card{
       background: rgba(20,20,20,0.88);
       border:1px solid var(--line);
@@ -157,7 +123,6 @@
     .name{font-weight:800;font-size:14px}
     .price{color:var(--accent);font-weight:900;white-space:nowrap}
     .desc{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
-
     .actions{margin-top:auto;padding:12px;border-top:1px solid var(--line);display:flex;gap:10px}
     .btn{
       width:100%;
@@ -172,6 +137,52 @@
     }
     .btn.secondary{background:transparent;color:var(--muted);cursor:default}
     .btn:hover{border-color:rgba(201,162,77,.55)}
+
+    /* START-KACHELN MIT BILDERN */
+    .tile{
+      position:relative;
+      height:140px;
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid var(--line);
+      cursor:pointer;
+      backdrop-filter: blur(4px);
+      background:#0f0f0f;
+      transition:transform .15s ease, border-color .15s ease;
+    }
+    .tile:hover{
+      transform:translateY(-2px);
+      border-color:rgba(201,162,77,.6);
+    }
+    .tile img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(1.05) contrast(1.05);
+      transform:scale(1.02);
+    }
+    .tile::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.75));
+    }
+    .tileText{
+      position:absolute;
+      left:12px; right:12px; bottom:12px;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .tileTitle{
+      font-weight:950;
+      letter-spacing:.3px;
+    }
+    .tileSub{
+      color:rgba(255,255,255,.78);
+      font-size:12px;
+    }
 
     footer{padding:18px 14px 26px;color:var(--muted);font-size:12px}
     .hint{
@@ -219,14 +230,13 @@
       color:var(--txt);
     }
 
-    /* Mobile: keep icons, hide badge */
     @media (max-width:520px){
       .logo{height:34px}
       .brand h1{font-size:16px}
       .badge{display:none}
       .right-wrap{margin-left:0}
+      .tile{height:130px}
     }
-
     @media (max-width:420px){
       .grid{grid-template-columns:1fr}
     }
@@ -238,8 +248,6 @@
 <header>
   <div class="wrap">
     <div class="top">
-
-      <!-- LINKS: Logo + Brand -->
       <div class="logo-wrap">
         <img src="images/logo.png" alt="LJ Lounge Logo" class="logo">
         <div class="brand">
@@ -248,39 +256,28 @@
         </div>
       </div>
 
-      <!-- RECHTS: Öffnungszeiten + Social Icons -->
       <div class="right-wrap">
-       
-
+        <div class="badge">17:00–01:00</div>
         <div class="socials">
-          <!-- Instagram -->
           <a href="https://www.instagram.com/_lj_lounge_?igsh=b2EzMTdiaWZnMGp6" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-              <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.3A2.8 2.8 0 1 1 14.8 12 2.8 2.8 0 0 1 12 14.8zM17.2 6.8a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.3A2.8 2.8 0 1 1 14.8 12 2.8 2.8 0 0 1 12 14.8zM17.2 6.8a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
           </a>
-
-          <!-- TikTok -->
           <a href="https://www.tiktok.com/@_lj_lounge_?_r=1&_t=ZN-93ShOAjJ0ly" target="_blank" rel="noopener" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-              <path d="M21 8.1c-1.5 0-3-.5-4.2-1.4v8.4a6.6 6.6 0 1 1-6.6-6.6c.4 0 .8 0 1.2.1v3.6a2.9 2.9 0 1 0 2 2.7V2h3.4c.3 1.9 2 3.5 4.1 3.7v2.4z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.1c-1.5 0-3-.5-4.2-1.4v8.4a6.6 6.6 0 1 1-6.6-6.6c.4 0 .8 0 1.2.1v3.6a2.9 2.9 0 1 0 2 2.7V2h3.4c.3 1.9 2 3.5 4.1 3.7v2.4z"/></svg>
           </a>
         </div>
       </div>
-
     </div>
 
-    <div class="controls">
+    <div class="controls" id="controls">
       <div class="search">
         <span aria-hidden="true">🔎</span>
         <input id="q" type="search" placeholder="Suchen… (z.B. Mojito, Cola, Gin)" />
       </div>
     </div>
 
-    <!-- Haupt-Tabs -->
     <div class="tabs" id="tabs">
-      <div class="tab active" data-cat="all">Alles</div>
+      <div class="tab active" data-cat="home">Start</div>
       <div class="tab" data-cat="soft">Softdrinks</div>
       <div class="tab" data-cat="hot">Heiss</div>
       <div class="tab" data-cat="cocktail">Cocktails</div>
@@ -290,8 +287,8 @@
       <div class="tab" data-cat="shisha">Shisha</div>
     </div>
 
-    <!-- Sub-Filter: nur sichtbar bei Cocktails -->
     <div class="tabs" id="cocktailFilter" style="display:none; padding-top:0;">
+      <div class="tab active" data-alc="all">Alle</div>
       <div class="tab" data-alc="true">Alkoholisch</div>
       <div class="tab" data-alc="false">Alkoholfrei</div>
     </div>
@@ -299,7 +296,7 @@
 </header>
 
 <main class="wrap">
-  <div class="section-title" id="sectionTitle">Alles</div>
+  <div class="section-title" id="sectionTitle">Start</div>
   <div class="grid" id="grid"></div>
 </main>
 
@@ -312,7 +309,6 @@
   </div>
 </footer>
 
-<!-- Modal -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Shisha Sorten">
   <div class="sheet">
     <div class="sheetTop">
@@ -327,59 +323,31 @@
 </div>
 
 <script>
-  // SHISHA SORTEN
-  const shishaTraditionell = [
-    "Traube Minze",
-    "Zitrone Minze",
-    "Doppelapfel",
-    "Falim",
-    "Falim Red",
-    "Black Nana"
-  ];
+  const shishaTraditionell = ["Traube Minze","Zitrone Minze","Doppelapfel","Falim","Falim Red","Black Nana"];
+  const shishaFruchtig = ["Kiwi","African Queen","Ice Kaktus","Love 66","Blaubeere","Wildberry Chill","Lemon Chill","Drachenfrucht","Pistazie","Peach","Ice Bonbon","GUM"];
 
-  const shishaFruchtig = [
-    "Kiwi",
-    "African Queen",
-    "Ice Kaktus",
-    "Love 66",
-    "Blaubeere",
-    "Wildberry Chill",
-    "Lemon Chill",
-    "Drachenfrucht",
-    "Pistazie",
-    "Peach",
-    "Ice Bonbon",
-    "GUM"
-  ];
-
-  // MENU ITEMS
-  // Für Cocktails: alc:true (alkoholisch) / alc:false (alkoholfrei)
   const items = [
-    /* SHISHA */
     {cat:"shisha", name:"Shisha – Traditionell", price:"12,00 €", desc:"Sorten anzeigen", img:"images/shishatraditionell.jpeg",
       action:{type:"modal", title:"Shisha – Traditionell (12,00 €)", sub:"Sorten", list: shishaTraditionell}},
     {cat:"shisha", name:"Shisha – Fruchtig", price:"14,00 €", desc:"Sorten anzeigen", img:"images/shishafruchtig.jpeg",
       action:{type:"modal", title:"Shisha – Fruchtig (14,00 €)", sub:"Sorten", list: shishaFruchtig}},
     {cat:"shisha", name:"Kopfwechsel", price:"9,00 €", desc:"Neuer Kopf", img:"images/shishkopfwechsel.jpeg"},
 
-    /* COCKTAILS (alkoholisch) */
-    {cat:"cocktail", alc:true, name:"Sex on the Beach", price:"9,50 €", img:"images/cocktail.jpg"},
-    {cat:"cocktail", alc:true, name:"Mai Tai", price:"9,50 €", img:"images/cocktail.jpg"},
-    {cat:"cocktail", alc:true, name:"Mojito", price:"7,50 €", img:"images/mojito.jpeg"},
-    {cat:"cocktail", alc:true, name:"Long Island Iced Tea", price:"9,50 €", img:"images/cocktail.jpg"},
-    {cat:"cocktail", alc:true, name:"Piña Colada", price:"8,50 €", img:"images/cocktail.jpg"},
-    {cat:"cocktail", alc:true, name:"Tequila Sunrise", price:"8,50 €", img:"images/cocktail.jpg"},
-    {cat:"cocktail", alc:true, name:"Strawberry Margarita", price:"8,50 €", img:"images/cocktail.jpg"},
-    {cat:"cocktail", alc:true, name:"Blue Lagoon", price:"8,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Sex on the Beach", price:"9,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Mai Tai", price:"9,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Mojito", price:"7,50 €", img:"images/mojito.jpeg"},
+    {cat:"cocktail", alc:true,  name:"Long Island Iced Tea", price:"9,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Piña Colada", price:"8,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Tequila Sunrise", price:"8,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Strawberry Margarita", price:"8,50 €", img:"images/cocktail.jpg"},
+    {cat:"cocktail", alc:true,  name:"Blue Lagoon", price:"8,50 €", img:"images/cocktail.jpg"},
 
-    /* COCKTAILS (alkoholfrei 0.0) – Beispiele */
     {cat:"cocktail", alc:false, name:"Virgin Mojito", price:"6,50 €", img:"images/cocktail_0.jpg"},
     {cat:"cocktail", alc:false, name:"Ipanema", price:"6,50 €", img:"images/cocktail_0.jpg"},
     {cat:"cocktail", alc:false, name:"Virgin Piña Colada", price:"6,50 €", img:"images/cocktail_0.jpg"},
     {cat:"cocktail", alc:false, name:"Virgin Tequila Sunrise", price:"6,50 €", img:"images/cocktail_0.jpg"},
-    {cat:"cocktail", alc:false, name:"Blue Lagoon (0.0)", price:"6,50 €", img:"images/cocktail_0.jpg"},
+    {cat:"cocktail", alc:false, name:"Blue Lagoon (alkoholfrei)", price:"6,50 €", img:"images/cocktail_0.jpg"},
 
-    /* LONGDRINKS */
     {cat:"longdrink", name:"Jack Daniels (4 cl)", price:"6,50 €", img:"images/jackdaniels.jpeg"},
     {cat:"longdrink", name:"Wildberry Lillet", price:"6,50 €", img:"images/longdrink.jpg"},
     {cat:"longdrink", name:"Vodka Red Bull", price:"6,50 €", img:"images/longdrink.jpg"},
@@ -389,9 +357,7 @@
     {cat:"longdrink", name:"Bacardi Cola", price:"6,50 €", img:"images/longdrink.jpg"},
     {cat:"longdrink", name:"Havanna Cola", price:"6,50 €", img:"images/longdrink.jpg"},
 
-    /* SOFTDRINKS */
-    {cat:"soft", name:"Cola (0,5 L)", price:"5,50 €", img:"images/cola.jpg"},
-	{cat:"soft", name:"Fanta (0,5 L)", price:"5,50 €", img:"images/fanta.jpg"},
+    {cat:"soft", name:"Cola (0,5 L)", price:"5,50 €", img:"images/cola.jpeg"},
     {cat:"soft", name:"Cola/Fanta/Sprite/Mezzo Mix (0,5 L)", price:"5,50 €", img:"images/soft.jpg"},
     {cat:"soft", name:"Iced Tea (versch. Sorten)", price:"4,50 €", img:"images/soft.jpg"},
     {cat:"soft", name:"Wasser still/sprudel", price:"3,50 €", img:"images/soft.jpg"},
@@ -399,19 +365,16 @@
     {cat:"soft", name:"Moloko Blaubeere", price:"5,00 €", img:"images/soft.jpg"},
     {cat:"soft", name:"Säfte (versch. Sorten)", price:"4,50 €", img:"images/soft.jpg"},
 
-    /* HEISS GETRÄNKE */
     {cat:"hot", name:"Tee (versch. Sorten)", price:"3,00 €", img:"images/hot.jpg"},
     {cat:"hot", name:"Cappuccino", price:"4,50 €", img:"images/hot.jpg"},
     {cat:"hot", name:"Espresso", price:"3,50 €", img:"images/hot.jpg"},
     {cat:"hot", name:"Chai Tee", price:"1,00 €", img:"images/hot.jpg"},
 
-    /* SHOTS (4 cl) */
     {cat:"shots", name:"Tequila (4 cl)", price:"2,90 €", img:"images/shots.jpg"},
     {cat:"shots", name:"Ficken (4 cl)", price:"2,90 €", img:"images/shots.jpg"},
     {cat:"shots", name:"Jägermeister (4 cl)", price:"2,90 €", img:"images/shots.jpg"},
     {cat:"shots", name:"Melonen Schnaps (4 cl)", price:"2,90 €", img:"images/shots.jpg"},
 
-    /* SNACKS (Empfehlung: hohe Marge, wenig Aufwand) */
     {cat:"snacks", name:"Geröstete Nüsse", price:"4,50 €", desc:"(kann Allergene enthalten)", img:"images/snacks_nuese.jpg"},
     {cat:"snacks", name:"Erdnüsse Wasabi", price:"4,50 €", desc:"(scharf)", img:"images/snacks_nuese.jpg"},
     {cat:"snacks", name:"Chips (Paprika / Salz)", price:"3,50 €", img:"images/snacks_chips.jpg"},
@@ -420,11 +383,23 @@
     {cat:"snacks", name:"Nachos Chili Cheese", price:"6,00 €", img:"images/snacks_nachos.jpg"}
   ];
 
+  // START-KACHELN: Bilder statt Anzahl
+  // Passe hier die Bildpfade an (liegen in /images/)
+  const categoriesHome = [
+    {cat:"shisha",    title:"Shisha",     sub:"Traditionell & fruchtig", img:"images/shishatraditionell.jpeg"},
+    {cat:"cocktail",  title:"Cocktails",  sub:"Alkoholisch & alkoholfrei", img:"images/mojito.jpeg"},
+    {cat:"longdrink", title:"Longdrinks", sub:"Klassiker", img:"images/longdrink.jpg"},
+    {cat:"soft",      title:"Softdrinks", sub:"Cola, Iced Tea, Wasser", img:"images/cola.jpeg"},
+    {cat:"snacks",    title:"Snacks",     sub:"Nüsse, Nachos & mehr", img:"images/snacks_nachos.jpg"},
+    {cat:"hot",       title:"Heiss",      sub:"Tee & Kaffee", img:"images/hot.jpg"}
+  ];
+
   const grid = document.getElementById("grid");
   const q = document.getElementById("q");
   const tabs = document.getElementById("tabs");
   const sectionTitle = document.getElementById("sectionTitle");
   const cocktailFilter = document.getElementById("cocktailFilter");
+  const controls = document.getElementById("controls");
 
   const modal = document.getElementById("modal");
   const modalTitle = document.getElementById("modalTitle");
@@ -432,8 +407,8 @@
   const modalList = document.getElementById("modalList");
   const modalClose = document.getElementById("modalClose");
 
-  let activeCat = "all";
-  let activeAlc = "all"; // "all" | "true" | "false"
+  let activeCat = "home";
+  let activeAlc = "all";
 
   function escapeHtml(s){
     return String(s).replace(/[&<>"']/g, m => ({
@@ -448,7 +423,6 @@
     modal.classList.add("open");
   }
   function closeModal(){ modal.classList.remove("open"); }
-
   modalClose.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
   document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
@@ -460,11 +434,24 @@
     );
   }
 
-  function render(){
+  function renderHome(){
+    sectionTitle.textContent = "Start";
+    grid.innerHTML = categoriesHome.map(c => `
+      <div class="tile" data-goto="${escapeHtml(c.cat)}" role="button" aria-label="${escapeHtml(c.title)}">
+        <img src="${escapeHtml(c.img)}" alt="${escapeHtml(c.title)}" loading="lazy">
+        <div class="tileText">
+          <div class="tileTitle">${escapeHtml(c.title)}</div>
+          <div class="tileSub">${escapeHtml(c.sub)}</div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function renderList(){
     const query = (q.value || "").trim().toLowerCase();
 
     const filtered = items.filter(x => {
-      if(activeCat !== "all" && x.cat !== activeCat) return false;
+      if(x.cat !== activeCat) return false;
 
       if(activeCat === "cocktail" && activeAlc !== "all"){
         if(String(!!x.alc) !== activeAlc) return false;
@@ -478,7 +465,6 @@
     });
 
     sectionTitle.textContent =
-      activeCat === "all" ? "Alles" :
       [...tabs.querySelectorAll(".tab")].find(t=>t.dataset.cat===activeCat)?.textContent || "Menu";
 
     grid.innerHTML = filtered.map((x) => {
@@ -508,6 +494,15 @@
     }
   }
 
+  function render(){
+    const isHome = activeCat === "home";
+    controls.style.display = isHome ? "none" : "flex";
+    cocktailFilter.style.display = (!isHome && activeCat === "cocktail") ? "flex" : "none";
+
+    if(isHome){ renderHome(); return; }
+    renderList();
+  }
+
   function setActive(cat){
     activeCat = cat;
 
@@ -515,11 +510,7 @@
       t.classList.toggle("active", t.dataset.cat === cat)
     );
 
-    cocktailFilter.style.display = (cat === "cocktail") ? "flex" : "none";
-    if(cat === "cocktail"){
-      resetCocktailFilterUI();
-    }
-
+    if(cat === "cocktail"){ resetCocktailFilterUI(); }
     render();
   }
 
@@ -532,7 +523,6 @@
   cocktailFilter.addEventListener("click", (e) => {
     const t = e.target.closest(".tab");
     if(!t) return;
-
     activeAlc = t.dataset.alc;
     [...cocktailFilter.querySelectorAll(".tab")].forEach(x =>
       x.classList.toggle("active", x === t)
@@ -541,6 +531,9 @@
   });
 
   grid.addEventListener("click", (e) => {
+    const tile = e.target.closest(".tile");
+    if(tile){ setActive(tile.dataset.goto); return; }
+
     const btn = e.target.closest("button[data-action='open']");
     if(!btn) return;
 

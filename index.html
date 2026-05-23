@@ -287,24 +287,32 @@
 </head>
 
 <body>
-<!-- Update-Banner -->
-  <div id="updateBanner" style="
-    background: rgba(201,162,77,0.1);
-    border-bottom: 1px solid rgba(201,162,77,0.4);
-    color: #c9a24d;
-    text-align: center;
-    padding: 12px 40px 12px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    position: relative;
+
+ <!-- Update Popup -->
+  <div id="updatePopup" style="
+    position:fixed; inset:0; background:rgba(0,0,0,.75);
+    display:flex; align-items:center; justify-content:center;
+    z-index:100; padding:14px;
   ">
-    ⚠️ &nbsp; Diese Getränkekarte wird gerade aktualisiert – Preise und Angebot können abweichen.
-    <button onclick="document.getElementById('updateBanner').remove()" style="
-      position:absolute; right:12px; top:50%; transform:translateY(-50%);
-      background:transparent; border:none; color:#c9a24d;
-      font-size:18px; cursor:pointer; padding:4px; line-height:1;
-    " aria-label="Schliessen">✕</button>
+    <div style="
+      background:#141414; border:1px solid rgba(201,162,77,.4);
+      border-radius:20px; padding:32px 28px; max-width:420px; width:100%;
+      text-align:center; position:relative;
+    ">
+      <div style="font-size:40px; margin-bottom:16px;">🛠️ </div>
+      <h2 style="margin:0 0 12px; color:#c9a24d; font-size:20px; letter-spacing:.3px;">
+        Karte wird aktualisiert
+      </h2>
+      <p style="margin:0 0 24px; color:#b6b6b6; font-size:14px; line-height:1.6;">
+        Unsere Getränkekarte wird gerade überarbeitet.<br>
+        Preise und Angebot können noch abweichen.
+      </p>
+      <button onclick="document.getElementById('updatePopup').remove()" style="
+        background:rgba(201,162,77,.15); border:1px solid rgba(201,162,77,.5);
+        color:#c9a24d; padding:12px 32px; border-radius:999px;
+        font-size:14px; font-weight:800; cursor:pointer; width:100%;
+      ">Verstanden</button>
+    </div>
   </div>
 
 <header>

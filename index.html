@@ -287,6 +287,25 @@
 </head>
 
 <body>
+<!-- Update-Banner -->
+  <div id="updateBanner" style="
+    background: rgba(201,162,77,0.1);
+    border-bottom: 1px solid rgba(201,162,77,0.4);
+    color: #c9a24d;
+    text-align: center;
+    padding: 12px 40px 12px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    position: relative;
+  ">
+    ⚠️ &nbsp; Diese Getränkekarte wird gerade aktualisiert – Preise und Angebot können abweichen.
+    <button onclick="document.getElementById('updateBanner').remove()" style="
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      background:transparent; border:none; color:#c9a24d;
+      font-size:18px; cursor:pointer; padding:4px; line-height:1;
+    " aria-label="Schliessen">✕</button>
+  </div>
 
 <header>
   <div class="wrap">

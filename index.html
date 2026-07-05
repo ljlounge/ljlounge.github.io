@@ -5,17 +5,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LJ Lounge – Getränke- & Shishakarte</title>
   <meta name="theme-color" content="#0b0b0b" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#0b0b0b; --card:#141414; --line:#262626; --txt:#ffffff;
-      --muted:#b6b6b6; --accent:#c9a24d; --chip:#1c1c1c;
+      --muted:#b6b6b6; --accent:#c9a24d; --accent-2:#e6c877; --chip:#1c1c1c;
       --radius:16px;
+      --font-display:"Cormorant Garamond", Georgia, serif;
+      --font-body:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --shadow-card:0 2px 6px rgba(0,0,0,.35), 0 12px 30px rgba(0,0,0,.28);
+      --shadow-hover:0 6px 14px rgba(0,0,0,.45), 0 22px 48px rgba(0,0,0,.42);
+      --gold-line:linear-gradient(90deg, transparent, rgba(201,162,77,.55), transparent);
+      --ease:cubic-bezier(.22,.61,.36,1);
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       color:var(--txt);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      font-family:var(--font-body);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
       background:
         linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.78)),
         url("images/background.jpg");
@@ -41,8 +54,19 @@
     .logo-wrap{display:flex;align-items:center;gap:10px;min-width:220px}
     .logo{height:42px;width:auto;flex:0 0 auto}
     .brand{display:flex;flex-direction:column}
-    .brand h1{margin:0;font-size:18px;letter-spacing:.4px}
-    .brand .sub{margin-top:2px;color:var(--muted);font-size:12px}
+    .brand h1{
+      margin:0;
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:26px;
+      line-height:1;
+      letter-spacing:.5px;
+      background:linear-gradient(180deg, #fff 0%, var(--accent-2) 120%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .brand .sub{margin-top:3px;color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase}
     .right-wrap{display:flex;align-items:center;gap:10px;margin-left:auto}
 
     .socials{display:flex;align-items:center;gap:10px}
@@ -97,18 +121,34 @@
       border:1px solid var(--line);
       background:rgba(28,28,28,.88);
       color:var(--muted);
-      padding:9px 12px;border-radius:999px;font-size:13px;cursor:pointer;white-space:nowrap;
+      padding:9px 14px;border-radius:999px;font-size:13px;cursor:pointer;white-space:nowrap;
       user-select:none;
       backdrop-filter: blur(4px);
+      transition:color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
     }
+    .tab:hover{color:var(--txt);border-color:rgba(201,162,77,.35)}
     .tab.active{
       border-color:rgba(201,162,77,.6);
-      color:var(--txt);
-      box-shadow:0 0 0 1px rgba(201,162,77,.15) inset
+      color:var(--accent-2);
+      background:linear-gradient(180deg, rgba(201,162,77,.16), rgba(201,162,77,.05));
+      box-shadow:0 0 0 1px rgba(201,162,77,.12) inset;
     }
 
     main{padding:14px}
-    .section-title{margin:10px 0 10px;color:var(--accent);font-size:13px;letter-spacing:.6px;text-transform:uppercase}
+    .section-title{
+      display:flex; align-items:center; gap:14px;
+      margin:14px 0 18px;
+      color:var(--accent-2);
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:26px;
+      letter-spacing:.4px;
+      text-transform:none;
+    }
+    .section-title::after{
+      content:""; flex:1; height:1px;
+      background:var(--gold-line);
+    }
 
     .grid{
       display:grid;
@@ -118,7 +158,7 @@
 
     /* Produktkarten */
     .card{
-      background: rgba(20,20,20,0.88);
+      background: linear-gradient(180deg, rgba(26,26,26,.9), rgba(17,17,17,.9));
       border:1px solid var(--line);
       border-radius:var(--radius);
       overflow:hidden;
@@ -126,16 +166,39 @@
       flex-direction:column;
       min-height: 240px;
       backdrop-filter: blur(4px);
+      box-shadow:var(--shadow-card);
+      transition:transform .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease);
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(201,162,77,.45);
+      box-shadow:var(--shadow-hover);
+    }
+    .imgWrap{
+      overflow:hidden;
+      background:#0f0f0f;
+      aspect-ratio:4/5;      /* einheitliches Format für ein ruhiges Grid */
     }
     .img{
       width:100%;
-      height:auto; /* komplettes Getränk anzeigen */
+      height:100%;
+      object-fit:cover;
+      object-position:center;
       display:block;
+      transition:transform .5s var(--ease);
     }
+    .card:hover .img{ transform:scale(1.04); }
     .pad{padding:12px}
     .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .name{font-weight:800;font-size:14px}
-    .price{color:var(--accent);font-weight:900;white-space:nowrap}
+    .name{font-weight:700;font-size:14.5px;letter-spacing:.2px;line-height:1.25}
+    .price{
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:20px;
+      line-height:1;
+      color:var(--accent-2);
+      white-space:nowrap;
+    }
     .desc{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
     .actions{margin-top:auto;padding:12px;border-top:1px solid var(--line);display:flex;gap:10px}
     .btn{
@@ -148,9 +211,21 @@
       font-weight:800;
       font-size:13px;
       cursor:pointer;
+      transition:border-color .2s var(--ease), background .2s var(--ease), transform .12s var(--ease);
     }
     .btn.secondary{background:transparent;color:var(--muted);cursor:default}
     .btn:hover{border-color:rgba(201,162,77,.55)}
+    .btn:active{transform:scale(.97)}
+    /* Primärer Add-Button */
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(201,162,77,.20), rgba(201,162,77,.08));
+      border-color:rgba(201,162,77,.45);
+      color:var(--accent-2);
+    }
+    .btn.primary:hover{
+      background:linear-gradient(180deg, rgba(201,162,77,.32), rgba(201,162,77,.16));
+      border-color:rgba(201,162,77,.7);
+    }
 
     /* Add/Minus Buttons */
     .btnRow{display:flex; gap:10px; width:100%}
@@ -197,8 +272,14 @@
       flex-direction:column;
       gap:4px;
     }
-    .tileTitle{font-weight:950;letter-spacing:.3px}
-    .tileSub{color:rgba(255,255,255,.78);font-size:12px}
+    .tileTitle{
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:22px;
+      line-height:1;
+      letter-spacing:.3px;
+    }
+    .tileSub{color:rgba(255,255,255,.82);font-size:12px;letter-spacing:.3px}
 
     footer{padding:18px 14px 26px;color:var(--muted);font-size:12px}
     .hint{
@@ -440,34 +521,35 @@
     {cat:"shisha", name:"Traditionell/Fruchtig Kopfwechsel", price:"7,00 €", desc:"Neuer Kopf", img:"images/shishkopfwechsel.jpg"},
     {cat:"shisha", name:"Darkblend Kopfwechsel", price:"9,00 €", desc:"Neuer Kopf", img:"images/shishkopfwechsel.jpg"},
 
-    {cat:"cocktail", alc:true,  name:"Sex on the Beach", price:"8,50 €", img:"images/sexonthebeach.jpg"},
+    {cat:"cocktail", alc:true,  name:"Sex on the Beach", price:"8,50 €", desc:"Wodka, Pfirsichsirup, Orangensaft, Cranberrysaft, Maracujasaft", img:"images/sexonthebeach.jpg"},
     {cat:"cocktail", alc:true,  name:"Mai Tai", price:"9,50 €", img:"images/maitai.jpg"},
-    {cat:"cocktail", alc:true,  name:"Mojito", price:"8,50 €", img:"images/mojito.jpg"},
-    {cat:"cocktail", alc:true,  name:"Long Island Iced Tea", price:"9,50 €", img:"images/longislandicedtea.jpg"},
-    {cat:"cocktail", alc:true,  name:"Piña Colada", price:"8,50 €", img:"images/pinacolada.jpg"},
+    {cat:"cocktail", alc:true,  name:"Mojito", price:"8,50 €", desc:"Weißer Rum, Rohrzucker, Limette & Minze, Sprudelwasser", img:"images/mojito.jpg"},
+    {cat:"cocktail", alc:true,  name:"Long Island Iced Tea", price:"9,50 €", desc:"Wodka, weißer Rum, Gin, Tequila, Triple Sec, Zitronensaft, Zuckersirup, Cola", img:"images/longislandicedtea.jpg"},
+    {cat:"cocktail", alc:true,  name:"Piña Colada", price:"8,50 €", desc:"Weißer Rum, Ananassaft, Orangensaft, Sahne, Coconut-Sirup", img:"images/pinacolada.jpg"},
     {cat:"cocktail", alc:true,  name:"Tequila Sunrise", price:"8,50 €", img:"images/tequilasunrise.jpg"},
     {cat:"cocktail", alc:true,  name:"Strawberry Margarita", price:"8,50 €", img:"images/strawberrymargarita.jpg"},
-    {cat:"cocktail", alc:true,  name:"Blue Lagoon", price:"8,50 €", img:"images/bluelagoon.jpg"},
+    {cat:"cocktail", alc:true,  name:"Blue Lagoon", price:"8,50 €", desc:"Wodka, Blue Curaçao, gestampfte Zitrone, Sprite", img:"images/bluelagoon.jpg"},
 
-    {cat:"cocktail", alc:false, name:"Virgin Mojito", price:"6,50 €", img:"images/mojito.jpg"},
-    {cat:"cocktail", alc:false, name:"Ipanema", price:"6,50 €", img:"images/ipanema.jpg"},
-    {cat:"cocktail", alc:false, name:"Virgin Piña Colada", price:"6,50 €", img:"images/pinacolada.jpg"},
-    {cat:"cocktail", alc:false, name:"Virgin Tequila Sunrise", price:"6,50 €", img:"images/tequilasunrise.jpg"},
+    {cat:"cocktail", alc:false, name:"Virgin Mojito", price:"6,50 €", desc:"Rohrzucker, Limette & Minze gestampft, Sprudelwasser", img:"images/mojito.jpg"},
+    {cat:"cocktail", alc:false, name:"Ipanema", price:"6,50 €", desc:"Fruchtig süß-sauer: Rohrzucker, Limette & Minze, Maracujasaft, Ginger Ale, Grenadine", img:"images/ipanema.jpg"},
+    {cat:"cocktail", alc:false, name:"Coconut Kiss", price:"6,50 €", desc:"Alkoholfreie Piña Colada: Ananassaft, Orangensaft, Sahne, Coconut-Sirup, Grenadine", img:"images/pinacolada.jpg"},
+    {cat:"cocktail", alc:false, name:"Virgin Sex on the Beach", price:"6,50 €", desc:"Orangensaft, Cranberrysaft, Maracujasaft, Pfirsichsirup, Zitronensaft", img:"images/sexonthebeach.jpg"},
+    {cat:"cocktail", alc:false, name:"Opakes", price:"6,50 €", desc:"Klassisch, spritzig, frisch: Rohrzucker, Limette & Minze, Ginger Ale", img:"images/opakes.jpg"},
 
     {cat:"longdrink", name:"Jack Daniels (4 cl)", price:"7,00 €", img:"images/jackdaniels.jpg"},
     {cat:"longdrink", name:"Wildberry Lillet", price:"7,00 €", img:"images/wildberrylillet.jpg"},
     {cat:"longdrink", name:"Vodka Red Bull", price:"7,00 €", img:"images/vodkaredbull.jpg"},
     {cat:"longdrink", name:"Aperol Spritz", price:"7,00 €", img:"images/aperolspritz.jpg"},
     {cat:"longdrink", name:"Gin Tonic", price:"7,00 €", img:"images/gintonic.jpg"},
-    {cat:"longdrink", name:"Jägermeister Cola", price:"7,00", img:"images/jaegermeistercola.jpg"},
+    {cat:"longdrink", name:"Jägermeister Cola", price:"7,00 €", img:"images/jaegermeistercola.jpg"},
     {cat:"longdrink", name:"Bacardi Cola", price:"7,00 €", img:"images/bacardicola.jpg"},
     {cat:"longdrink", name:"Havanna Cola", price:"7,00 €", img:"images/havannacola.jpg"},
 
     {cat:"soft", name:"Cola (0,33 l)", price:"3,90 €", img:"images/cola.jpg"},
     {cat:"soft", name:"Fanta (0,33 l)", price:"3,90 €", img:"images/fanta.jpg"},
-    {cat:"soft", name:"Sprite (0,33 l)", price:"3,90 €€", img:"images/sprite.jpg"},
+    {cat:"soft", name:"Sprite (0,33 l)", price:"3,90 €", img:"images/sprite.jpg"},
     {cat:"soft", name:"Mezzo Mix (0,33 l)", price:"3,90 €", img:"images/mezzomix.jpg"},
-    {cat:"soft", name:"Iced Tea (versch. Sorten)", price:"4,00 €", img:"images/icetea.jpg"},
+    {cat:"soft", name:"Elephant Bay Iced Tea (0,33 l)", price:"4,00 €", desc:"Lemon, Peach, Blueberry, Pomegranate, Mango-Pineapple, Watermelon", img:"images/icetea.jpg"},
     {cat:"soft", name:"Wasser still/sprudel (0,25 l)", price:"2,90 €", img:"images/wasser.jpg"},
     {cat:"soft", name:"Wasser still/sprudel (1,00 l)", price:"6,50 €", img:"images/wasser.jpg"},
     {cat:"soft", name:"Red Bull (versch. Sorten)", price:"4,00 €", img:"images/redbull.jpg"},
@@ -480,13 +562,13 @@
     {cat:"hot", name:"Espresso", price:"3,00 €", img:"images/espresso.jpg"},
 
     {cat:"shots", name:"Tequila (2 cl)", price:"2,50 €", img:"images/tequila.jpg"},
-    {cat:"shots", name:"Jack Daniel`s (2 cl)", price:"2,50 €", img:"images/jackshot.jpg"},
+    {cat:"shots", name:"Jack Daniel's (2 cl)", price:"2,50 €", img:"images/jackshot.jpg"},
     {cat:"shots", name:"Jägermeister (2 cl)", price:"2,50 €", img:"images/jaegermeister.jpg"},
     {cat:"shots", name:"Melonen Schnaps (2 cl)", price:"2,90 €", img:"images/melonenschnaps.jpg"},
     {cat:"shots", name:"Vodka (2 cl)", price:"2,50 €", img:"images/wodkashot.jpg"},
     
     {cat:"snacks", name:"Nüsse", price:"1,00 €", desc:"(Kann Allergene enthalten)", img:"images/erdnusse.jpg"},
-    {cat:"snacks", name:"Nüsse im Teigmantel Paprike", price:"1,50 €", desc:"(Kann Allergene enthalten)", img:"images/niknaks.jpg"},
+    {cat:"snacks", name:"Nüsse im Teigmantel (Paprika)", price:"1,50 €", desc:"(Kann Allergene enthalten)", img:"images/niknaks.jpg"},
     {cat:"snacks", name:"Chips (Paprika / Salz)", price:"1,00 €", desc:"(Kann Allergene enthalten)", img:"images/chips.jpg"},
 
 
@@ -730,7 +812,9 @@
 
       return `
         <article class="card" data-name="${escapeHtml(x.name)}">
-          <img class="img" src="${escapeHtml(x.img)}" alt="${escapeHtml(x.name)}" loading="lazy">
+          <div class="imgWrap">
+            <img class="img" src="${escapeHtml(x.img)}" alt="${escapeHtml(x.name)}" loading="lazy">
+          </div>
           <div class="pad">
             <div class="row">
               <div class="name">${escapeHtml(x.name)}</div>
@@ -745,7 +829,7 @@
                 ? `<button class="btn" data-action="open" type="button">Sorten anzeigen</button>`
                 : `
                   <div class="btnRow">
-                    <button class="btn" data-cartadd="1" type="button">+ Hinzufügen</button>
+                    <button class="btn primary" data-cartadd="1" type="button">+ Hinzufügen</button>
                     <button class="btn icon" data-cartremove="1" aria-label="Entfernen" type="button">−</button>
                   </div>
                 `

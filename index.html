@@ -81,7 +81,7 @@
     .socials svg{width:18px;height:18px;display:block}
     .socials svg path{fill:currentColor}
 
-    /* Warenkorb Button */
+    /* Merkliste Button */
     .cartBtn{
       display:inline-flex; align-items:center; gap:8px;
       height:36px; padding:0 12px;
@@ -327,7 +327,15 @@
       color:var(--txt);
     }
 
-    /* Warenkorb-Liste */
+    /* Merkliste */
+    .cartNote{
+      margin:0 0 14px; padding:11px 13px;
+      border:1px solid rgba(201,162,77,.28);
+      border-radius:12px;
+      background:rgba(201,162,77,.07);
+      color:var(--muted); font-size:13px; line-height:1.5;
+    }
+    .cartNote strong{color:var(--accent-2); font-weight:800}
     .cartLine{
       display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
       border:1px solid var(--line);
@@ -369,33 +377,6 @@
 
 <body>
 
- <!-- Update Popup -->
-  <div id="updatePopup" style="
-    position:fixed; inset:0; background:rgba(0,0,0,.75);
-    display:flex; align-items:center; justify-content:center;
-    z-index:100; padding:14px;
-  ">
-    <div style="
-      background:#141414; border:1px solid rgba(201,162,77,.4);
-      border-radius:20px; padding:32px 28px; max-width:420px; width:100%;
-      text-align:center; position:relative;
-    ">
-      <div style="font-size:40px; margin-bottom:16px;">🛠️ </div>
-      <h2 style="margin:0 0 12px; color:#c9a24d; font-size:20px; letter-spacing:.3px;">
-        Karte wird aktualisiert
-      </h2>
-      <p style="margin:0 0 24px; color:#b6b6b6; font-size:14px; line-height:1.6;">
-        Unsere Getränkekarte wird gerade überarbeitet.<br>
-        Preise und Angebot können noch abweichen.
-      </p>
-      <button onclick="document.getElementById('updatePopup').remove()" style="
-        background:rgba(201,162,77,.15); border:1px solid rgba(201,162,77,.5);
-        color:#c9a24d; padding:12px 32px; border-radius:999px;
-        font-size:14px; font-weight:800; cursor:pointer; width:100%;
-      ">Verstanden</button>
-    </div>
-  </div>
-
 <header>
   <div class="wrap">
     <div class="top">
@@ -417,8 +398,8 @@
           </a>
         </div>
 
-        <button class="cartBtn" id="cartBtn" type="button" aria-label="Warenkorb öffnen">
-          🛒 <span class="cartCount" id="cartCount">0</span>
+        <button class="cartBtn" id="cartBtn" type="button" aria-label="Merkliste öffnen">
+          📝 <span class="cartCount" id="cartCount">0</span>
         </button>
       </div>
     </div>
@@ -471,7 +452,7 @@
         <p id="modalSub"></p>
       </div>
       <div style="display:flex; gap:10px; align-items:center;">
-        <button class="close" id="modalAddToCart" type="button">In den Warenkorb</button>
+        <button class="close" id="modalAddToCart" type="button">Merken</button>
         <button class="close" id="modalClose" type="button">Schliessen</button>
       </div>
     </div>
@@ -479,16 +460,21 @@
   </div>
 </div>
 
-<!-- Warenkorb Modal -->
-<div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Warenkorb">
+<!-- Merkliste Modal -->
+<div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Merkliste">
   <div class="sheet">
     <div class="sheetTop">
       <div>
-        <h3>Warenkorb</h3>
-        <p>Ausgewählte Artikel</p>
+        <h3>Merkliste</h3>
+        <p>Deine Auswahl – keine Bestellung</p>
       </div>
       <button class="close" id="cartClose" type="button">Schliessen</button>
     </div>
+
+    <p class="cartNote">
+      Nur eine Merkliste für dich – <strong>keine Bestellung</strong>.
+      Sag uns deine Auswahl einfach am Tisch, wir bringen sie dir gern.
+    </p>
 
     <div class="list" id="cartList" style="grid-template-columns:1fr; gap:10px;"></div>
 
@@ -498,43 +484,32 @@
     </div>
 
     <div class="cartActions">
-      <button class="btn" id="cartCopy" type="button">Bestellung kopieren</button>
+      <button class="btn" id="cartCopy" type="button">Auswahl kopieren</button>
       <button class="btn" id="cartClear" type="button" style="border-color:rgba(201,162,77,.35)">Leeren</button>
     </div>
 
-    <p style="margin-top:10px;color:var(--muted);font-size:12px;line-height:1.4">
-      Hinweis: Der Warenkorb dient nur zur Auswahl/Anzeige und ist keine Online-Bestellung.
-    </p>
   </div>
 </div>
 
 <script>
-  const shishaTraditionell = ["Traube Minze","Zitrone Minze","Doppelapfel","Falim","Falim Red","Black Nana"];
-  const shishaFruchtig = ["Kiwi","African Queen","Ice Kaktus","Love 66","Blaubeere","Wildberry Chill","Lemon Chill","Drachenfrucht","Ananas","Ice Bonbon",];
-
   const items = [
-    {cat:"shisha", name:"Shisha – Traditionell", price:"14,00 €", desc:"Sorten anzeigen", img:"images/shishatraditionell.jpg",
-      action:{type:"modal", title:"Shisha – Traditionell (14,00 €)", sub:"Sorten", list: shishaTraditionell}},
-    {cat:"shisha", name:"Shisha – Fruchtig", price:"14,00 €", desc:"Sorten anzeigen", img:"images/shishafruchtig.jpg",
-      action:{type:"modal", title:"Shisha – Fruchtig (14,00 €)", sub:"Sorten", list: shishaFruchtig}},
+    {cat:"shisha", name:"Shisha – Traditionell", price:"14,00 €", desc:"Sehr große Sortenauswahl – sprich uns einfach an, wir beraten dich gern.", img:"images/shishatraditionell.jpg"},
+    {cat:"shisha", name:"Shisha – Fruchtig", price:"14,00 €", desc:"Sehr große Sortenauswahl – sprich uns einfach an, wir beraten dich gern.", img:"images/shishafruchtig.jpg"},
     {cat:"shisha", name:"Schwarztee", price:"17,00 €", desc:"Darkblend geschmack", img:"images/shishashwartztee.png"},
     {cat:"shisha", name:"Traditionell/Fruchtig Kopfwechsel", price:"7,00 €", desc:"Neuer Kopf", img:"images/shishkopfwechsel.jpg"},
     {cat:"shisha", name:"Darkblend Kopfwechsel", price:"9,00 €", desc:"Neuer Kopf", img:"images/shishkopfwechsel.jpg"},
 
-    {cat:"cocktail", alc:true,  name:"Sex on the Beach", price:"8,50 €", desc:"Wodka, Pfirsichsirup, Orangensaft, Cranberrysaft, Maracujasaft", img:"images/sexonthebeach.jpg"},
-    {cat:"cocktail", alc:true,  name:"Mai Tai", price:"9,50 €", img:"images/maitai.jpg"},
-    {cat:"cocktail", alc:true,  name:"Mojito", price:"8,50 €", desc:"Weißer Rum, Rohrzucker, Limette & Minze, Sprudelwasser", img:"images/mojito.jpg"},
-    {cat:"cocktail", alc:true,  name:"Long Island Iced Tea", price:"9,50 €", desc:"Wodka, weißer Rum, Gin, Tequila, Triple Sec, Zitronensaft, Zuckersirup, Cola", img:"images/longislandicedtea.jpg"},
-    {cat:"cocktail", alc:true,  name:"Piña Colada", price:"8,50 €", desc:"Weißer Rum, Ananassaft, Orangensaft, Sahne, Coconut-Sirup", img:"images/pinacolada.jpg"},
-    {cat:"cocktail", alc:true,  name:"Tequila Sunrise", price:"8,50 €", img:"images/tequilasunrise.jpg"},
-    {cat:"cocktail", alc:true,  name:"Strawberry Margarita", price:"8,50 €", img:"images/strawberrymargarita.jpg"},
-    {cat:"cocktail", alc:true,  name:"Blue Lagoon", price:"8,50 €", desc:"Wodka, Blue Curaçao, gestampfte Zitrone, Sprite", img:"images/bluelagoon.jpg"},
+    {cat:"cocktail", alc:true,  name:"Sex on the Beach", price:"9,00 €", desc:"Wodka, Pfirsichsirup, Orangensaft, Cranberrysaft, Maracujasaft", img:"images/sexonthebeach.jpg"},
+    {cat:"cocktail", alc:true,  name:"Mojito", price:"9,00 €", desc:"Weißer Rum, Rohrzucker, Limette & Minze, Sprudelwasser", img:"images/mojito.jpg"},
+    {cat:"cocktail", alc:true,  name:"Long Island Iced Tea", price:"10,00 €", desc:"Wodka, weißer Rum, Gin, Tequila, Triple Sec, Zitronensaft, Zuckersirup, Cola", img:"images/longislandicedtea.jpg"},
+    {cat:"cocktail", alc:true,  name:"Piña Colada", price:"9,00 €", desc:"Weißer Rum, Ananassaft, Orangensaft, Sahne, Coconut-Sirup", img:"images/pinacolada.jpg"},
+    {cat:"cocktail", alc:true,  name:"Blue Lagoon", price:"9,00 €", desc:"Wodka, Blue Curaçao, gestampfte Zitrone, Sprite", img:"images/bluelagoon.jpg"},
 
-    {cat:"cocktail", alc:false, name:"Virgin Mojito", price:"6,50 €", desc:"Rohrzucker, Limette & Minze gestampft, Sprudelwasser", img:"images/mojito.jpg"},
-    {cat:"cocktail", alc:false, name:"Ipanema", price:"6,50 €", desc:"Fruchtig süß-sauer: Rohrzucker, Limette & Minze, Maracujasaft, Ginger Ale, Grenadine", img:"images/ipanema.jpg"},
-    {cat:"cocktail", alc:false, name:"Coconut Kiss", price:"6,50 €", desc:"Alkoholfreie Piña Colada: Ananassaft, Orangensaft, Sahne, Coconut-Sirup, Grenadine", img:"images/pinacolada.jpg"},
-    {cat:"cocktail", alc:false, name:"Virgin Sex on the Beach", price:"6,50 €", desc:"Orangensaft, Cranberrysaft, Maracujasaft, Pfirsichsirup, Zitronensaft", img:"images/sexonthebeach.jpg"},
-    {cat:"cocktail", alc:false, name:"Opakes", price:"6,50 €", desc:"Klassisch, spritzig, frisch: Rohrzucker, Limette & Minze, Ginger Ale", img:"images/opakes.jpg"},
+    {cat:"cocktail", alc:false, name:"Virgin Mojito", price:"7,50 €", desc:"Rohrzucker, Limette & Minze gestampft, Sprudelwasser", img:"images/mojito.jpg"},
+    {cat:"cocktail", alc:false, name:"Ipanema fruchtig", price:"8,50 €", desc:"Fruchtig süß-sauer: Rohrzucker, Limette & Minze, Maracujasaft, Ginger Ale, Grenadine", img:"images/ipanema.jpg"},
+    {cat:"cocktail", alc:false, name:"Coconut Kiss", price:"7,50 €", desc:"Alkoholfreie Piña Colada: Ananassaft, Orangensaft, Sahne, Coconut-Sirup, Grenadine", img:"images/pinacolada.jpg"},
+    {cat:"cocktail", alc:false, name:"Virgin Sex on the Beach", price:"7,50 €", desc:"Orangensaft, Cranberrysaft, Maracujasaft, Pfirsichsirup, Zitronensaft", img:"images/sexonthebeach.jpg"},
+    {cat:"cocktail", alc:false, name:"Ipanema", price:"7,50 €", desc:"Klassisch, spritzig, frisch: Rohrzucker, Limette & Minze, Ginger Ale", img:"images/opakes.jpg"},
 
     {cat:"longdrink", name:"Jack Daniels (4 cl)", price:"7,00 €", img:"images/jackdaniels.jpg"},
     {cat:"longdrink", name:"Wildberry Lillet", price:"7,00 €", img:"images/wildberrylillet.jpg"},
@@ -600,7 +575,7 @@
 
   let modalItemRef = null; // ✅ FIX: Referenz auf aktuelles Shisha-Item
 
-  /* Warenkorb Elemente */
+  /* Merkliste Elemente */
   const cartBtn = document.getElementById("cartBtn");
   const cartCountEl = document.getElementById("cartCount");
   const cartModal = document.getElementById("cartModal");
@@ -640,8 +615,8 @@
   modalAddToCart.addEventListener("click", () => {
     if(!modalItemRef) return;
     addToCart(modalItemRef);
-    modalAddToCart.textContent = "Hinzugefügt";
-    setTimeout(()=> modalAddToCart.textContent = "In den Warenkorb", 900);
+    modalAddToCart.textContent = "Gemerkt";
+    setTimeout(()=> modalAddToCart.textContent = "Merken", 900);
   });
 
   /* ===========================
@@ -655,7 +630,7 @@
   }
 
   /* ===========================
-     Warenkorb Logik
+     Merkliste Logik
   ============================ */
   const CART_KEY = "lj_cart_v1";
   let cart = loadCart(); // { "<name>": {qty, priceText, cat} }
@@ -705,7 +680,7 @@
   function renderCart(){
     const entries = Object.entries(cart);
     if(entries.length === 0){
-      cartList.innerHTML = `<div style="color:#b6b6b6;padding:8px">Warenkorb ist leer.</div>`;
+      cartList.innerHTML = `<div style="color:#b6b6b6;padding:8px">Deine Merkliste ist leer.</div>`;
       cartTotalEl.textContent = "0,00 €";
       return;
     }
@@ -759,11 +734,11 @@
   cartCopy.addEventListener("click", async () => {
     const lines = Object.entries(cart).map(([n, it]) => `${it.qty}x ${n} (${it.priceText})`);
     const total = cartTotalEl.textContent;
-    const text = `Bestellung LJ Lounge:\n${lines.join("\n")}\n\nSumme: ${total}`;
+    const text = `Meine Auswahl – LJ Lounge:\n${lines.join("\n")}\n\nSumme: ${total}`;
     try{
       await navigator.clipboard.writeText(text);
       cartCopy.textContent = "Kopiert";
-      setTimeout(()=> cartCopy.textContent="Bestellung kopieren", 1200);
+      setTimeout(()=> cartCopy.textContent="Auswahl kopieren", 1200);
     }catch{
       alert("Kopieren nicht möglich. Bitte manuell markieren.");
     }
@@ -829,7 +804,7 @@
                 ? `<button class="btn" data-action="open" type="button">Sorten anzeigen</button>`
                 : `
                   <div class="btnRow">
-                    <button class="btn primary" data-cartadd="1" type="button">+ Hinzufügen</button>
+                    <button class="btn primary" data-cartadd="1" type="button">+ Merken</button>
                     <button class="btn icon" data-cartremove="1" aria-label="Entfernen" type="button">−</button>
                   </div>
                 `
